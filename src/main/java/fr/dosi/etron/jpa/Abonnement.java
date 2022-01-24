@@ -11,17 +11,20 @@ public class Abonnement {
     Long id;
     String type;
     Double frais;
-    @OneToMany
-    List<PtChargeAbonn> ptChargeAbonn;
+    String typeCharge;
+    Double tarifMin;
+    Double tarifLanc;
 
     public Abonnement() {
     }
 
-    public Abonnement(Long id, String type, Double frais, List<PtChargeAbonn> ptChargeAbonn) {
+    public Abonnement(Long id, String type, Double frais, String typeCharge, Double tarifMin, Double tarifLanc) {
         this.id = id;
         this.type = type;
         this.frais = frais;
-        this.ptChargeAbonn = ptChargeAbonn;
+        this.typeCharge = typeCharge;
+        this.tarifMin = tarifMin;
+        this.tarifLanc = tarifLanc;
     }
 
     public Long getId() {
@@ -48,11 +51,29 @@ public class Abonnement {
         this.frais = frais;
     }
 
-    public List<PtChargeAbonn> getPtChargeAbonn() {
-        return ptChargeAbonn;
+    public String getTypeCharge() {
+        return typeCharge;
     }
 
-    public void setPtChargeAbonn(List<PtChargeAbonn> ptChargeAbonn) {
-        this.ptChargeAbonn = ptChargeAbonn;
+    public Double getTarifMin() {
+        return tarifMin;
     }
+
+    public Double getTarifLanc() {
+        return tarifLanc;
+    }
+
+
+    public void setTypeCharge(String typeCharge) {
+        this.typeCharge = typeCharge;
+    }
+
+    public void setTarifMin(Double tarifMin) {
+        this.tarifMin = tarifMin;
+    }
+
+    public void setTarifLanc(Double tarifLanc) {
+        this.tarifLanc = tarifLanc;
+    }
+
 }
