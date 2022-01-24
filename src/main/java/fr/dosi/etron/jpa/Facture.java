@@ -13,7 +13,7 @@ public class Facture {
     @Temporal(TemporalType.DATE)
     Date date;
     String description;
-    Double swsommePayee;
+    Double sommePayee;
     Double sommeDue;
 
     @ManyToOne(optional = false)
@@ -44,12 +44,12 @@ public class Facture {
         this.description = description;
     }
 
-    public Double getSwsommePayee() {
-        return swsommePayee;
+    public Double getSommePayee() {
+        return sommePayee;
     }
 
-    public void setSwsommePayee(Double swsommePayee) {
-        this.swsommePayee = swsommePayee;
+    public void setSommePayee(Double swsommePayee) {
+        this.sommePayee = swsommePayee;
     }
 
     public Double getSommeDue() {
