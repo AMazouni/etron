@@ -1,18 +1,28 @@
 package fr.dosi.etron.jpa;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Abonnement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+    String type;
+    Double frais;
+    @OneToMany
+    List<PtChargeAbonn> ptChargeAbonn;
 
-    String libelle;
+    public Abonnement() {
+    }
+
+    public Abonnement(Long id, String type, Double frais, List<PtChargeAbonn> ptChargeAbonn) {
+        this.id = id;
+        this.type = type;
+        this.frais = frais;
+        this.ptChargeAbonn = ptChargeAbonn;
+    }
 
     public Long getId() {
         return id;
@@ -22,11 +32,27 @@ public class Abonnement {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getType() {
+        return type;
     }
 
-    public void setLibelle(String libellé) {
-        this.libelle = libellé;
+    public Double getFrais() {
+        return frais;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setFrais(Double frais) {
+        this.frais = frais;
+    }
+
+    public List<PtChargeAbonn> getPtChargeAbonn() {
+        return ptChargeAbonn;
+    }
+
+    public void setPtChargeAbonn(List<PtChargeAbonn> ptChargeAbonn) {
+        this.ptChargeAbonn = ptChargeAbonn;
     }
 }
