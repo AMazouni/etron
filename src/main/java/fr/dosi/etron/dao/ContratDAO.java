@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryRestResource(path = "contrat",collectionResourceRel = "contrat")
+@RepositoryRestResource(path = "contrat")
 public interface ContratDAO extends JpaRepository<Contrat,Long> {
 
 

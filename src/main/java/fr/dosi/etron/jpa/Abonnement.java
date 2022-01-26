@@ -11,7 +11,7 @@ public class Abonnement {
     Long id;
     String type;
     Double frais;
-    @OneToMany
+    @OneToMany(mappedBy = "abonnement")
     List<Tarifs> tarifs;
 
     public Abonnement() {
@@ -36,12 +36,12 @@ public class Abonnement {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Double getFrais() {
         return frais;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setFrais(Double frais) {
@@ -54,15 +54,5 @@ public class Abonnement {
 
     public void setTarifs(List<Tarifs> tarifs) {
         this.tarifs = tarifs;
-    }
-
-    @Override
-    public String toString() {
-        return "Abonnement{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", frais=" + frais +
-                ", tarifs=" + tarifs +
-                '}';
     }
 }

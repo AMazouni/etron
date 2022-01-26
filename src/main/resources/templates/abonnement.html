@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-8">
+    <title>Spring Security Demo</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<style>
+    .navbar {
+        background-color: green;
+    }
+    #hidden_div_ville,#hidden_div_transit{
+        display: none;
+    }
+</style>
+<body>
+<h1>Abonnements</h1>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">
+                Registration and
+                Login </a>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+<!-- Create HTML registration form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully chosen a subcription!</div>
+            </div>
+
+            <h1>Subcription</h1>
+
+            <form th:action="@{/abonnement}" method="post"
+                  th:object="${abonnement}">
+                <div class="form-group">
+                    <label class="control-label" for="type">
+                        Veuillez choisir un type d'abonnement  </label>
+                    <select th:field="*{type}" id="type"  onchange="showDiv('hidden_div_ville',this)">
+                        <option th:value="none" th:text="---" default></option>
+                        <option th:value="1" th:text="Ville"></option>
+                        <option th:value="0" th:text="Transit"></option>
+                    </select>
+
+                </div>
+                <div id="hidden_div_transit">
+                    <div class="form-group" for="AC_ville">
+                    <label class="control-label"> Points de charge AC (jusqu'? 22 kw) </label>
+                        <p id="AC_ville" >0.04 ?/min</p>
+                    </div>
+                    <div class="form-group" for="DC_ville">
+                        <label class="control-label"> Points de charge DC (jusqu'? 50 kw) </label>
+                        <p id="DC_ville">0.21 ?/min</p>
+                    </div>
+                    <div class="form-group" for="IONITY_ville">
+                        <label class="control-label"> STATIONS DE CHARGE RAPIDE IONITY (jusqu'? 150 kw) </label>
+                        <p id="IONITY_ville">Pas d'offre</p>
+                    </div>
+                </div>
+                <div id="hidden_div_ville">
+                    <div class="form-group" for="AC_transit">
+                        <label class="control-label"> Points de charge AC (jusqu'? 22 kw) </label>
+                        <p id="AC_transit">0.04 ?/min</p>
+                    </div>
+                    <div class="form-group" for="DC_transit">
+                        <label class="control-label"> Points de charge DC (jusqu'? 50 kw) </label>
+                        <p id="DC_transit">0.21 ?/min</p>
+                    </div>
+                    <div class="form-group" for="IONITY_transit">
+                        <label class="control-label"> STATIONS DE CHARGE RAPIDE IONITY (jusqu'? 150 kw) </label>
+                        <div id="IONITY_transit">
+                            <label class="control-label">Prix de lancement :</label>
+                            <p> 8 euro/session de charge</p>
+                            <br>
+                            <label class="control-label">Prix sp?cial :</label>
+                            <p> 0.65 ?/min</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    function showDiv(divId, element)
+    {
+        if(element.value ==1){
+            document.getElementById('hidden_div_transit').style.display = 'none';
+            document.getElementById('hidden_div_ville').style.display = 'block';
+        }
+        if(element.value ==0){
+            document.getElementById("hidden_div_ville").style.display = 'none';
+            document.getElementById("hidden_div_transit").style.display = 'block';
+        }
+        if(element.value =="none"){
+            document.getElementById("hidden_div_ville").style.display = 'none';
+            document.getElementById("hidden_div_transit").style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>

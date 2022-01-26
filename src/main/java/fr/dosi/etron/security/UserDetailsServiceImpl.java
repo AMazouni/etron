@@ -21,12 +21,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        fr.dosi.etron.jpa.User appUser=userDao.findByUsername(username);
+        fr.dosi.etron.jpa.User appUser=userDao.findByEmail(username);
         if(appUser==null) throw new UsernameNotFoundException("invalid user");
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        appUser.RoleList().forEach(r->{
-            authorities.add(new SimpleGrantedAuthority((String) r));
+        appUser.getRoles().forEach(r->{
+            authorities.add(new SimpleGrantedAuthority(r.getName()));
         });
-        return new User(appUser.getUsername(),appUser.getPassword(),authorities);
+        return new User(appUser.getEmail(),appUser.getPassword(),authorities);
     }
 }

@@ -34,9 +34,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public org.springframework.security.core.Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             fr.dosi.etron.jpa.User appUser= new ObjectMapper().readValue(request.getInputStream(), fr.dosi.etron.jpa.User.class);
-            System.out.println(appUser.getUsername());
+            System.out.println(appUser.getEmail());
             System.out.println(appUser.getPassword());
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getEmail(),appUser.getPassword()));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
