@@ -15,10 +15,10 @@ public class HomeController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/login")
+   /* @GetMapping("/login")
     public String login(){
         return "login";
-    }
+    }*/
 
     @GetMapping("/")
     public String home(){

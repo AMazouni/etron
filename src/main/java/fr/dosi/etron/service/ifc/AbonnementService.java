@@ -1,4 +1,4 @@
-package fr.dosi.etron.services;
+package fr.dosi.etron.service.ifc;
 
 import fr.dosi.etron.jpa.Abonnement;
 

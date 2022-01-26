@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService{
         String lastname=registrationDto.getLastName();
         String email=registrationDto.getEmail();
         String password=passwordEncoder.encode(registrationDto.getPassword());
-        Collection<Role> roles= Arrays.asList(new Role("Admin"));
+        List<Role> roles= Arrays.asList(new Role("Client"));
         User user=new User(firstname,lastname,email,password,roles);
         return userDAO.save(user);
     }

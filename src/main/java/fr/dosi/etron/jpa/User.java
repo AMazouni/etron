@@ -2,6 +2,7 @@ package fr.dosi.etron.jpa;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,19 +16,19 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn
             (name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id",
-                    referencedColumnName = "id"))
-
-    private Collection<Role> roles;
+                    referencedColumnName = "id"))*/
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Role> roles;
 
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+    public User(String firstName, String lastName, String email, String password, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -75,11 +76,11 @@ public class User {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

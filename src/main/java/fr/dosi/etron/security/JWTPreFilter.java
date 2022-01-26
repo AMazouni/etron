@@ -40,6 +40,7 @@ public class JWTPreFilter extends OncePerRequestFilter {
             System.out.println("Token=" + jwtToken);
             if (jwtToken == null || !jwtToken.startsWith(SecurityParams.HEADER_PREFIX)) {
                 filterChain.doFilter(request, response);
+                //TODO response
                 return;
             }
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SecurityParams.SECRET)).build();
