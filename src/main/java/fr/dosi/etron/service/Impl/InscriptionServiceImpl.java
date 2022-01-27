@@ -41,8 +41,12 @@ public class InscriptionServiceImpl implements InscriptionService {
         String password=bCryptPasswordEncoder.encode(registrationDto.getPassword());
         List<Role> roles= Arrays.asList(new Role("Client"));
         Client client= new Client(lastname,firstname,"","","",new Date(),null);
-        if(clientDAO.findByNomAndPrenom(client.getNom(),client.getPrenom())==null) clientDAO.save(client);
+        Client dBClient = clientDAO.findByNomAndPrenom(client.getNom(),client.getPrenom());
         User user=new User(firstname,lastname,email,password,roles,client);
+        registrationDto.setPassword(null);
+        if(dBClient==null) clientDAO.save(client);
+        if(dBClient!=null && userDAO.existsByClient(dBClient)) throw new DuplicateEntityFault(registrationDto,"Le Client a deja un compte");
+
         return this.save(user);
     }
 
@@ -65,7 +69,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Transactional
     @Override
     public User save(User entity) throws DuplicateEntityFault, EmptyRessourceFault {
-        if(userDAO.findByEmail(entity.getEmail())!=null)  throw new DuplicateEntityFault(entity,"email");
+        if(userDAO.findByEmail(entity.getEmail())!=null)  throw new DuplicateEntityFault(entity,"User Email Duplicate");
         if(entity.getEmail()==null || entity.getPassword()==null || entity.getRoles()==null || entity.getFirstName()==null || entity.getLastName()==null ) throw new EmptyRessourceFault(entity);
 
         if(entity.getEmail().isEmpty() || entity.getPassword().isEmpty() || entity.getFirstName().isEmpty() || entity.getLastName().isEmpty() )  throw new EmptyRessourceFault(entity);
