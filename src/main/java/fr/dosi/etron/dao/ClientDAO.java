@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RepositoryRestResource(path = "Client",collectionResourceRel = "Client")
 public interface ClientDAO extends JpaRepository<Client,Long> {
-
+Client findByNomAndPrenom(String nom,String prenom);
 
 }

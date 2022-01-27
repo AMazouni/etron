@@ -28,6 +28,32 @@ public class Client {
     @OneToMany(mappedBy = "proprietaire")
     private List<Voiture> voitures;
 
+
+    public Client() {
+    }
+
+    public Client(Long id, String nom, String prenom, String adresse, String nationalite, String paysResidence, Date dateInscription, List<Voiture> voitures) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.nationalite = nationalite;
+        this.paysResidence = paysResidence;
+        this.dateInscription = dateInscription;
+        this.voitures = voitures;
+    }
+    public Client( String nom, String prenom, String adresse, String nationalite, String paysResidence, Date dateInscription, List<Voiture> voitures) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.nationalite = nationalite;
+        this.paysResidence = paysResidence;
+        this.dateInscription = dateInscription;
+        this.voitures = voitures;
+    }
+
+
     public Long getId() {
         return id;
     }

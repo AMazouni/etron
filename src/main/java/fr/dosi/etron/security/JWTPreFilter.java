@@ -32,7 +32,7 @@ public class JWTPreFilter extends OncePerRequestFilter {
                 "Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization");
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } else if (request.getRequestURI().equals("/login")) {
+        } else if (request.getRequestURI().equals("/api/ser-inscription/login")) {
             filterChain.doFilter(request, response);
             return;
         } else {

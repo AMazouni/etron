@@ -1,4 +1,4 @@
-package fr.dosi.etron.controller;
+package fr.dosi.etron.controller.web;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
