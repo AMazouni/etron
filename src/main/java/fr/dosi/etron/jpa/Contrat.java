@@ -16,10 +16,10 @@ public class Contrat {
     Long id;
 
     @Temporal(TemporalType.DATE)
-    Calendar  dateDebut;
+    Date  dateDebut;
     @Temporal(TemporalType.DATE)
     @Column(name = "dateFin",nullable = true)
-    Calendar dateFin;
+    Date dateFin;
 
     @ManyToOne(optional = false)
     Client client;
@@ -32,14 +32,14 @@ public class Contrat {
     public Contrat() {
     }
 
-    public Contrat(Calendar  dateDebut, Calendar  dateFin, Client client, Abonnement abonnement) {
+    public Contrat(Date  dateDebut, Date  dateFin, Client client, Abonnement abonnement) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
         this.abonnement = abonnement;
     }
 
-    public Contrat(Calendar  dateDebut, Calendar  dateFin, Client client, Abonnement abonnement, List<Facture> factures) {
+    public Contrat(Date  dateDebut, Date  dateFin, Client client, Abonnement abonnement, List<Facture> factures) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
@@ -55,19 +55,19 @@ public class Contrat {
         this.id = id;
     }
 
-    public Calendar  getDateDebut() {
+    public Date  getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Calendar  dateDebut) {
+    public void setDateDebut(Date  dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Calendar  getDateFin() {
+    public Date  getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Calendar  dateFin) {
+    public void setDateFin(Date  dateFin) {
         this.dateFin = dateFin;
     }
 
