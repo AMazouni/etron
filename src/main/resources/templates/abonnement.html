@@ -49,12 +49,11 @@
 
             <h1>Subcription</h1>
 
-            <form th:action="@{/abonnement}" method="post"
-                  th:object="${abonnement}">
+            <div>
                 <div class="form-group">
                     <label class="control-label" for="type">
                         Veuillez choisir un type d'abonnement  </label>
-                    <select th:field="*{type}" id="type"  onchange="showDiv('hidden_div_ville',this)">
+                    <select id="type"  onchange="showDiv('hidden_div_ville',this)">
                         <option th:value="none" th:text="---" default></option>
                         <option th:value="1" th:text="Ville"></option>
                         <option th:value="0" th:text="Transit"></option>
@@ -64,7 +63,7 @@
                 <div id="hidden_div_transit">
                     <div class="form-group" for="AC_ville">
                     <label class="control-label"> Points de charge AC (jusqu'? 22 kw) </label>
-                        <p id="AC_ville" >0.04 ?/min</p>
+                        <p id="AC_ville">0.04 ?/min</p>
                     </div>
                     <div class="form-group" for="DC_ville">
                         <label class="control-label"> Points de charge DC (jusqu'? 50 kw) </label>
@@ -97,28 +96,67 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        Save</button>
+                    <input type="submit" id="submit" class="btn btn-primary">
+                        Save</input>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:inline="javascript">
+    const data={
+        type:'',
+        frais:''
+    }
     function showDiv(divId, element)
     {
         if(element.value ==1){
             document.getElementById('hidden_div_transit').style.display = 'none';
             document.getElementById('hidden_div_ville').style.display = 'block';
+            data.type="ville";
+            data.frais=41;
         }
         if(element.value ==0){
             document.getElementById("hidden_div_ville").style.display = 'none';
             document.getElementById("hidden_div_transit").style.display = 'block';
+            data.type="transit";
+            data.frais=50;
         }
         if(element.value =="none"){
             document.getElementById("hidden_div_ville").style.display = 'none';
             document.getElementById("hidden_div_transit").style.display = 'none';
         }
+    }
+
+    document.getElementById("submit").onclick=  function (){
+        let url_string=window.location.href;
+        const url = new URL(url_string);
+        const jwt = url.searchParams.get("jwt");
+        console.log(jwt);
+
+       let e=document.getElementById("type");
+       if(e.value == "none"){
+           alert("make a choice");
+       }else{
+           $.ajax({
+               url: "/abonnement?jwt="+jwt,
+               type: "POST",
+               dataType: "json",
+               data: JSON.stringify(data),
+               contentType: "application/json",
+               success: function(response){
+                   alert(JSON.stringify(response));
+                   window.location = '/error';
+               },
+               error: function(err){
+                   alert(jwt);
+                   //window.location = '/contrat?jwt=' + jwt;
+               }
+           });
+
+       }
+
     }
 </script>
 </body>

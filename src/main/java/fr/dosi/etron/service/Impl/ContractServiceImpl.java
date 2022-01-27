@@ -20,8 +20,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Contrat save(Contrat contrat) {
-        contratDAO.save(contrat);
-        return contrat;
+        return contratDAO.save(contrat);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Contrat findByClient(Long id) {
-        return (Contrat) contratDAO.findByUserId(id);
+        return (Contrat) contratDAO.findByClientId(id);
     }
 
 
