@@ -19,8 +19,8 @@ import java.util.List;
 @Service
 public class InscriptionServiceImpl {
 
-@Autowired
-UserDAO userDao;
+    @Autowired
+    UserDAO userDao;
 
 
     @Autowired

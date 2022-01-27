@@ -1,13 +1,14 @@
 package fr.dosi.etron.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
 import fr.dosi.etron.jpa.Abonnement;
+import fr.dosi.etron.security.SecurityParams;
 import fr.dosi.etron.service.ifc.AbonnementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/abonnement")
@@ -21,7 +22,14 @@ public class AbonnementController {
     public Abonnement abonnement(){return new Abonnement();}
 
     @GetMapping
-    public String showAbonnementRegistrationForm(){
+    public String showAbonnementRegistrationForm(@RequestParam String jwt){
+        System.out.println(jwt);
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SecurityParams.SECRET)).build();
+        try {
+            System.out.println(verifier.verify(jwt));
+        }catch(Exception e){
+            return "login";
+        }
         return "abonnement";
     }
 

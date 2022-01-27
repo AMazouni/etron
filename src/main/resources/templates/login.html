@@ -40,7 +40,7 @@
         <div class="col-md-6 col-md-offset-3">
 
             <h1>User Login Page</h1>
-            <form th:action="@{/login}" method="post">
+            <div  id="form">
 
                 <!-- error message -->
                 <div th:if="${param.error}">
@@ -55,9 +55,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="username"> Username </label> :
-                    <input type="text" class="form-control" id="username"
-                           name="username" placeholder="Enter Email ID"
+                    <label for="email"> Username </label> :
+                    <input type="text" class="form-control" id="email"
+                           name="email" placeholder="Enter Email ID"
                            autofocus="autofocus">
                 </div>
 
@@ -70,14 +70,14 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="login-submit"
+                            <button  name="login-submit"
                                    id="login-submit"
                                    class="form-control btn btn-primary"
-                                   value="Log In" />
+                                     value="Log In" >submit</button>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
             <div class="form-group">
                     <span>New user? <a href="/" th:href="@{/registration}">
                 Register
@@ -86,5 +86,84 @@
         </div>
     </div>
 </div>
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:inline="javascript">
+    console.log("hhhhhhhhhhhhhhhhhh");
+    document.getElementById("login-submit").onclick=  function (){
+        console.log("bbb");
+
+        const data = {
+            email:"zanabaa@gmail.com",
+            password:"nono"
+        };
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function(response){
+
+                alert(JSON.stringify(response.headers.get('Authorization')));
+            },
+            error: function(err){
+                alert(JSON.stringify(err.responseText));
+                window.location = '/abonnement?jwt=' + err.responseText;
+            }
+        });
+    };
+    /*function handleSubmit() {
+        //event.preventDefault();
+        //const formData = new FormData(event.target);
+        const data = {
+            email:"zanabaa@gmail.com",
+            password:"nono"
+        };
+        //formData.forEach((value, key) => (data[key] = value));
+        console.log(data);
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            dataType: "json",
+            data: data,
+            contentType: "application/json",
+            success: function(response){
+                alert(JSON.stringify(response));
+            },
+            error: function(err){
+                alert(JSON.stringify(err));
+            }
+        });
+
+        //let xhr = new XMLHttpRequest();
+        /*form = form.serializeArray();
+        form = form.concat([
+            {name: "jwt", value: "xxxxxxxx"},
+            {name: "username", value: "zanabaa@gmail.com"},
+            {name: "email", value: "nono"}
+        ]);*/
+        //const value = Object.fromEntries(data.entries());
+        // var object = {};
+        // formData.forEach((value, key) => object[key] = value);
+        // var json = JSON.stringify(object);
+        // $('#form').submit(function(eventObj) {
+        //     $(this).append('<input type="hidden" name="jwt" value="xxxxxx" /> ');
+        //     return true;
+        // });
+        // let url = "/login";
+        // xhr.open("POST", url, true);
+        // xhr.setRequestHeader("Content-Type", "application/json");
+        // let d = JSON.stringify({ "name": "salma", "email": "smth" });
+        // console.log(d);
+        // xhr.send(d);
+
+        //form.submit();
+
+
+    //let form = document.querySelector('form');
+   // form.addEventListener('submit', handleSubmit);
+
+
+</script>
 </body>
 </html>

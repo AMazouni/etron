@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class HomeController {
 
     @Autowired
     UserService userService;
 
-   /* @GetMapping("/login")
+    @GetMapping("/login")
     public String login(){
         return "login";
-    }*/
+    }
 
     @GetMapping("/")
     public String home(){
