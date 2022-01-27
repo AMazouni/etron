@@ -11,10 +11,7 @@ import fr.dosi.etron.service.ifc.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -28,11 +25,12 @@ public class InscriptionRest {
     @Autowired
     InscriptionServiceImpl inscriptionService;
 
+    @GetMapping
     public List<User> getAll() {
         return inscriptionService.getAll();
     }
-
-    public ResponseEntity findByEmail(String email) throws ResourcesNotFoundFault {
+    @GetMapping("/{email}")
+    public ResponseEntity findByEmail(@PathVariable String email)  {
 
         try {
             return new ResponseEntity<User>(inscriptionService.findByEmail(email), HttpStatus.OK);
@@ -46,7 +44,8 @@ public class InscriptionRest {
     }
 
     @Transactional
-    public ResponseEntity save(User entity) throws DuplicateEntityFault, EmptyRessourceFault {
+    @PostMapping
+    public ResponseEntity save(User entity)  {
 
         try {
             return new ResponseEntity<User>(inscriptionService.save(entity), HttpStatus.OK);
@@ -58,22 +57,24 @@ public class InscriptionRest {
 
         }
     }
-
-    public ResponseEntity findById(Long aLong)  {
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Long id)  {
         try {
-            return new ResponseEntity<User>(inscriptionService.findById(aLong), HttpStatus.OK);
+            return new ResponseEntity<User>(inscriptionService.findById(id), HttpStatus.OK);
         }catch (ResourcesNotFoundFault e){
             return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.NOT_FOUND);
         }
     }
 
+    @GetMapping("/count")
     public long count() {
         return inscriptionService.count();
     }
 
     @Transactional
-    public void deleteById(Long aLong) {
-        inscriptionService.deleteById(aLong);
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        inscriptionService.deleteById(id);
     }
 
     @PostMapping("/register")

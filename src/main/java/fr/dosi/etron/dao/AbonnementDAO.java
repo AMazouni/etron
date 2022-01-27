@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AbonnementDAO extends JpaRepository<Abonnement,Long> {
 
-
+   Abonnement findFirstByType(String type);
 }
