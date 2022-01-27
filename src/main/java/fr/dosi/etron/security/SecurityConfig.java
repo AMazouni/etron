@@ -30,12 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**", "/register/**","/api/ser-inscription/register","/api/ser-inscription/login").permitAll();
         /*http.authorizeRequests().anyRequest().authenticated();
+
         http.authorizeRequests().and().formLogin().loginPage("/login").
                 permitAll().and().logout()
                 .invalidateHttpSession(true).clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
                 logoutSuccessUrl("/login?logout")
                 .permitAll();*/
+
 //        http.authorizeRequests().anyRequest().authenticated();
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
