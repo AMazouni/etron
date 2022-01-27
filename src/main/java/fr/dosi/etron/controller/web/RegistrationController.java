@@ -1,4 +1,4 @@
-package fr.dosi.etron.controller;
+package fr.dosi.etron.controller.web;
 
 import fr.dosi.etron.dto.UserRegistrationDTO;
 import fr.dosi.etron.jpa.User;

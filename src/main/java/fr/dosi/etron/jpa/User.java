@@ -8,7 +8,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String firstName;
@@ -24,6 +24,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;
 
+    @OneToOne(optional = true)
+    Client client;
+
 
     public User() {
     }
@@ -34,6 +37,23 @@ public class User {
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User( String firstName, String lastName, String email, String password, List<Role> roles, Client client) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.client = client;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Long getId() {

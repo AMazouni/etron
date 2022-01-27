@@ -1,4 +1,4 @@
-package fr.dosi.etron.controller;
+package fr.dosi.etron.controller.web;
 
 import fr.dosi.etron.jpa.User;
 import fr.dosi.etron.services.UserService;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class HomeController {
 
     @Autowired
@@ -22,14 +22,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-        return "abonnement";
+        return "Hello World!";
     }
 
-    @GetMapping("/users")
-    public List<User> users(){
-       List<User> users= userService.getAll();
-        return users;
-    }
+
 
 
 
