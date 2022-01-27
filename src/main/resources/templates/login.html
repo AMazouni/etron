@@ -88,9 +88,7 @@
 </div>
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:inline="javascript">
-    console.log("hhhhhhhhhhhhhhhhhh");
     document.getElementById("login-submit").onclick=  function (){
-        console.log("bbb");
 
         const data = {
             email:"zanabaa@gmail.com",
@@ -103,8 +101,8 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function(response){
-
                 alert(JSON.stringify(response.headers.get('Authorization')));
+                window.location = '/error';
             },
             error: function(err){
                 alert(JSON.stringify(err.responseText));

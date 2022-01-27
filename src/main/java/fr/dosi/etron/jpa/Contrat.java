@@ -4,6 +4,8 @@ package fr.dosi.etron.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +16,10 @@ public class Contrat {
     Long id;
 
     @Temporal(TemporalType.DATE)
-    Date dateDebut;
+    Calendar  dateDebut;
     @Temporal(TemporalType.DATE)
     @Column(name = "dateFin",nullable = true)
-    Date dateFin;
+    Calendar dateFin;
 
     @ManyToOne(optional = false)
     Client client;
@@ -30,8 +32,14 @@ public class Contrat {
     public Contrat() {
     }
 
-    public Contrat(Long id, Date dateDebut, Date dateFin, Client client, Abonnement abonnement, List<Facture> factures) {
-        this.id = id;
+    public Contrat(Calendar  dateDebut, Calendar  dateFin, Client client, Abonnement abonnement) {
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.client = client;
+        this.abonnement = abonnement;
+    }
+
+    public Contrat(Calendar  dateDebut, Calendar  dateFin, Client client, Abonnement abonnement, List<Facture> factures) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
@@ -47,19 +55,19 @@ public class Contrat {
         this.id = id;
     }
 
-    public Date getDateDebut() {
+    public Calendar  getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(Calendar  dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public Calendar  getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(Calendar  dateFin) {
         this.dateFin = dateFin;
     }
 
