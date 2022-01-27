@@ -13,4 +13,6 @@ import java.util.Collection;
 public interface ContratDAO extends JpaRepository<Contrat,Long> {
     @Query("SELECT u.id FROM Contrat u WHERE u.client = :id")
     Collection<Contrat> findByUserId(Long id);
+
+
 }

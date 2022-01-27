@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
 
     public User findByEmail(String email) throws ResourcesNotFoundFault {
         User u= userDAO.findByEmail(email);
-        if(u != null) throw new ResourcesNotFoundFault(email);
+        if(u != null) throw new ResourcesNotFoundFault(email, email);
         return userDAO.findByEmail(email);
     }
 
@@ -59,14 +59,14 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public User save(User entity) throws DuplicateEntityFault, EmptyRessourceFault {
         if(userDAO.findByEmail(entity.getEmail())!=null)  throw new DuplicateEntityFault(entity,"email");
-        if(entity.getEmail()==null || entity.getPassword()==null || entity.getRoles()==null || entity.getFirstName()==null || entity.getLastName()==null ) throw new EmptyRessourceFault(entity);
+        if(entity.getEmail()==null || entity.getPassword()==null || entity.getRoles()==null || entity.getFirstName()==null || entity.getLastName()==null ) throw new EmptyRessourceFault(entity,"an attribute is null");
 
         return userDAO.save(entity);
     }
 
     public User findById(Long aLong) throws ResourcesNotFoundFault {
         Optional<User> u = userDAO.findById(aLong);
-        if(!u.isPresent()) throw new ResourcesNotFoundFault(aLong);
+        if(!u.isPresent()) throw new ResourcesNotFoundFault(aLong, "Not Found");
         return u.get();
     }
 
