@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/registration")
 public class RegistrationController {
 
@@ -37,15 +37,15 @@ public class RegistrationController {
         return users;
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<UserRegistrationDTO> registerUserAccount(@RequestBody UserRegistrationDTO userRegistrationDTO){
         userService.save(userRegistrationDTO);
         HttpHeaders headers=new HttpHeaders();
         return ResponseEntity.ok().headers(headers).body(userRegistrationDTO) ;
-    }
-    /*@PostMapping
+    }*/
+    @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDTO userRegistrationDTO){
         userService.save(userRegistrationDTO);
         return "redirect:/registration?success";
-    }*/
+    }
 }

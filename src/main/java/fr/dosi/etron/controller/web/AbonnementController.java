@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/abonnement")
@@ -47,21 +48,28 @@ public class AbonnementController {
     }
 
     @PostMapping
-    public String abonnementAdd(@ModelAttribute("abonnement") Abonnement abonnement,@RequestParam String jwt){
-        System.out.println("frais++>"+abonnement.getFrais());
-        System.out.println("frais++>"+abonnement.getType());
+    public String abonnementAdd(@ModelAttribute("abonnement") Abonnement abonnement,@RequestParam String jwt,@RequestBody Map<String, String> data){
+        System.out.println("frais++>"+data.get("frais"));
+        System.out.println("frais++>"+data.get("type"));
+        abonnement.setFrais(data.get("frais"));
+        abonnement.setType(data.get("type"));
         Calendar cal = Calendar.getInstance();
         Calendar  date = cal;
         int months= cal.get(Calendar.MONTH) + 12;
         //Calendar dateFin=cal.set(2022,months);
         DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
-
         User user=userDAO.findByEmail(email);
         Client client=user.getClient();
+        System.out.println("JWT++> "+jwt);
+
+        System.out.println("USER++> "+user);
+        System.out.println("DATE++> "+date  );
+
+        System.out.println("CLIENT++> "+client);
         Contrat contrat=new Contrat(date,date,client,abonnement);
         abonnementService.save(abonnement);
         contractService.save(contrat);
-        return "redirect:/contrat?jwt" +jwt;
+        return "redirect:/contrat?jwt="+jwt;
     }
 }

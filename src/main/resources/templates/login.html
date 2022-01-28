@@ -89,10 +89,9 @@
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:inline="javascript">
     document.getElementById("login-submit").onclick=  function (){
-
         const data = {
-            email:"zanabaa@gmail.com",
-            password:"nono"
+            email:document.getElementById("email").value,
+            password:document.getElementById("password").value
         };
         $.ajax({
             url: "/login",

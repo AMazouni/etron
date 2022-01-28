@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security Demo</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<style>
+    .navbar {
+        background-color: green;
+    }
+</style>
+<body>
+<h1>Contrat</h1>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">
+                Registration and
+                Login </a>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br><br><br><br>
+<!-- Create HTML registration form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully chosen a subcription!</div>
+            </div>
+
+            <h1>Subcription</h1>
+
+            <tr th:each="con : ${contrat}">
+                <td th:text="${con.date_debut}"></td>
+                <td th:text="${con.date_fin}"></td>
+                <td th:text="${con.date_debut}"></td>
+                <td th:each="abn : ${con.abonnement}"> <!-- I have only modified here -->
+                    <ul>
+                        <li th:text = ${abn.type}></li>
+                    </ul>
+                </td>
+                <td th:each="client : ${abn.client}"> <!-- I have only modified here -->
+                    <ul>
+                        <li th:text = ${client.nom}></li>
+                        <li th:text = ${client.prenom}></li>
+                    </ul>
+                </td>
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -34,7 +34,6 @@ public class AbonnementServiceImpl implements AbonnementService {
     @Override
     public Contrat sabonner(AbonnementDTO abonnementDTO,String jwt) throws ResourcesNotFoundFault {
         try {
-
             DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User u = insSer.findByEmail(email);

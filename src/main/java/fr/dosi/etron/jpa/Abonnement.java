@@ -10,14 +10,14 @@ public class Abonnement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String type;
-    Double frais;
+    String frais;
     @OneToMany(mappedBy = "abonnement")
     List<Tarifs> tarifs;
 
     public Abonnement() {
     }
 
-    public Abonnement(Long id, String type, Double frais, List<Tarifs> tarifs) {
+    public Abonnement(Long id, String type, String frais, List<Tarifs> tarifs) {
         this.id = id;
         this.type = type;
         this.frais = frais;
@@ -36,7 +36,7 @@ public class Abonnement {
         return type;
     }
 
-    public Double getFrais() {
+    public String getFrais() {
         return frais;
     }
 
@@ -44,7 +44,7 @@ public class Abonnement {
         this.type = type;
     }
 
-    public void setFrais(Double frais) {
+    public void setFrais(String frais) {
         this.frais = frais;
     }
 
