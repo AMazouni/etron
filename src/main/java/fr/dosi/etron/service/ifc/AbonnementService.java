@@ -17,7 +17,6 @@ public interface AbonnementService {
 
 
 
-    List<User> saveAll(Iterable<User> entities);
 
     @Transactional
     Contrat save(Contrat entity) throws DuplicateEntityFault, EmptyRessourceFault;
@@ -25,7 +24,7 @@ public interface AbonnementService {
 
     User findById(Long aLong) throws ResourcesNotFoundFault;
 
-    Contrat findByClientId(Long aLong) throws ResourcesNotFoundFault;
+    List<Contrat> findByClientId(Long aLong) throws ResourcesNotFoundFault;
 
     long count();
     public List<Contrat> getAllContrats();
