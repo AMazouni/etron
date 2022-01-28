@@ -16,5 +16,6 @@ public interface ContratDAO extends JpaRepository<Contrat,Long> {
    /* @Query("SELECT u.id FROM Contrat u WHERE u.client = :id")
     Collection<Contrat> findByUserId(Long id);*/
     Boolean existsByDateDebutAfter(Date d);
+    @Query("SELECT u.id FROM Contrat u WHERE u.client = :id")
     List<Contrat> findByClientId(Long id);
 }

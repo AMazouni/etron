@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Controller
@@ -49,11 +51,13 @@ public class AbonnementController {
     public String abonnementAdd(@RequestBody Abonnement abonnement,@RequestParam String jwt){
         System.out.println("frais++>"+abonnement.getFrais());
         System.out.println("frais++>"+abonnement.getType());
-        //Date date = Calendar.getInstance().getTime();
-        Date date=new Date();
-        System.out.println("DATE++> "+date );
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String datedebut=dateFormat.format(calendar.getTime());
+        calendar.add(Calendar.DATE, 12);
+        String dateFin=dateFormat.format(calendar.getTime());
+        System.out.println("DATE++> "+datedebut );
 
-        //Calendar dateFin=cal.set(2022,months);
         DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User user=userDAO.findByEmail(email);
@@ -61,10 +65,9 @@ public class AbonnementController {
         System.out.println("JWT++> "+jwt);
 
         System.out.println("USER++> "+user);
-        System.out.println("DATE++> "+date  );
 
         System.out.println("CLIENT++> "+client);
-        Contrat contrat=new Contrat(date,date,client,abonnement);
+        Contrat contrat=new Contrat(datedebut,dateFin,client,abonnement);
         abonnementService.save(abonnement);
         contractService.save(contrat);
         return "redirect:/contrat?jwt="+jwt;
