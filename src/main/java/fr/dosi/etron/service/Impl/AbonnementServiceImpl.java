@@ -47,7 +47,6 @@ public class AbonnementServiceImpl implements AbonnementService {
         calFin.add(Calendar.YEAR,1);
         Abonnement a = abonnementDAO.findFirstByType(abonnementDTO.getTypeAbonnement());
         Contrat contrat = new Contrat(cal,calFin,c,a);
-
         if( a==null)throw new ResourcesNotFoundFault(abonnementDTO,"Pas d'abonnement disponible de type"+abonnementDTO.getTypeAbonnement());
         if(c==null)throw new ResourcesNotFoundFault(abonnementDTO,"Pas de client avec l'emæil "+email);
         contratDAO.save(contrat);
@@ -68,13 +67,15 @@ public class AbonnementServiceImpl implements AbonnementService {
         Client c = u.getClient();
         return this.findByClientId(c.getId());
         }catch(JWTDecodeException e ){
-        throw new ResourcesNotFoundFault(jwt,"Some kind of exception");
-    }
+        throw new ResourcesNotFoundFault(jwt,"Some kind of jwt exception");
+    }catch (Exception e ){
+            throw new ResourcesNotFoundFault(e,"Some exception");
+        }
     }
 
 
     @Override
-    public Contrat resilierContrat(Long id,String jwt) throws ResourcesNotFoundFault {
+    public Contrat resilierContrat(Long id, String jwt) throws ResourcesNotFoundFault {
         try{
             List<Contrat> myContrat = getMyContrats(jwt);
             Contrat con=myContrat.stream().filter(c -> c.getId()==id).findFirst().get();

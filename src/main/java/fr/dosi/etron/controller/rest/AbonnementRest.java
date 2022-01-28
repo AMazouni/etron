@@ -1,6 +1,7 @@
 package fr.dosi.etron.controller.rest;
 
 import antlr.StringUtils;
+import fr.dosi.etron.dao.ContratDAO;
 import fr.dosi.etron.dto.AbonnementDTO;
 import fr.dosi.etron.exceptions.EmptyRessourceFault;
 import fr.dosi.etron.exceptions.ResourcesNotFoundFault;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class AbonnementRest {
     @Autowired
     AbonnementService aboser;
+@Autowired
+ContratDAO contratDAO;
 
     @Transactional
     @PostMapping("/")
@@ -33,17 +36,26 @@ public class AbonnementRest {
             return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.BAD_REQUEST);
         }catch (ResourcesNotFoundFault e){
             return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.NOT_FOUND);
-
         }
 
     }
 
-    public List<Contrat> getMyContrats(String jwt) throws ResourcesNotFoundFault {
-        return aboser.getMyContrats(jwt);
+    public ResponseEntity getMyContrats(String jwt) throws ResourcesNotFoundFault {
+
+        try {
+            return new ResponseEntity<List<Contrat>>( aboser.getMyContrats(jwt),HttpStatus.OK);
+        }catch (ResourcesNotFoundFault e){
+            return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.NOT_FOUND);
+        }
+
     }
 
-    public Contrat resilierContrat(Long id, String jwt) throws ResourcesNotFoundFault {
-        return aboser.resilierContrat(id, jwt);
+    public ResponseEntity resilierContrat(Long id, String jwt) throws ResourcesNotFoundFault {
+        try {
+            return new ResponseEntity<Contrat>( aboser.resilierContrat(id, jwt),HttpStatus.OK);
+        }catch (ResourcesNotFoundFault e){
+            return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.NOT_FOUND);
+        }
     }
 
     public String getjwt(Map<String,String> headers){

@@ -31,7 +31,7 @@ public class InscriptionServiceImpl implements InscriptionService {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
+//kjjk
     @Transactional
     @Override
     public User register(UserRegistrationDTO registrationDto) throws EmptyRessourceFault, DuplicateEntityFault {

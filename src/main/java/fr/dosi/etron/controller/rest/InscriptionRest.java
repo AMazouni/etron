@@ -82,7 +82,7 @@ public class InscriptionRest {
        try {
            return new ResponseEntity<User>(inscriptionService.register(user), HttpStatus.OK);
        }catch (EmptyRessourceFault e){
-             return new ResponseEntity<EmptyRessourceFault>(e, HttpStatus.BAD_REQUEST);
+             return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.BAD_REQUEST);
 
        }catch (DuplicateEntityFault e){
            return new ResponseEntity<Map<String,Object>>(e.getBody(), HttpStatus.BAD_REQUEST);
