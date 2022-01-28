@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/contrat",params="jwt")
@@ -26,13 +27,13 @@ public class ContratController {
     @Autowired
     private UserDAO userDAO;
     @GetMapping
-    public Contrat getContract(String jwt){
+    public List<Contrat> getContract(String jwt){
         DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User user=userDAO.findByEmail(email);
-        System.out.println("EMAIL=" + email);
-        System.out.println("EMAIL contrat=" + contractService.findByClient(user.getId()));
-        return contractService.findByClient(user.getId());
+        System.out.println("EMAIL=" + user);
+        System.out.println("EMAIL contract=" + contractService.findByClient(user.getId()).get(0));
+        return  contractService.findByClient(user.getId());
     }
     @PostMapping
     public Contrat saveContract(Contrat contrat){

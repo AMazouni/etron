@@ -15,13 +15,11 @@ public class Contrat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-//    @Temporal(TemporalType.DATE)
-//    Date  dateDebut;
-//    @Temporal(TemporalType.DATE)
-//    @Column(name = "dateFin",nullable = true)
-//    Date dateFin;
-    String dateDebut;
-    String dateFin;
+    @Temporal(TemporalType.DATE)
+    Calendar  dateDebut;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "dateFin",nullable = true)
+    Calendar dateFin;
 
     @ManyToOne(optional = false)
     Client client;
@@ -34,14 +32,14 @@ public class Contrat {
     public Contrat() {
     }
 
-    public Contrat(String  dateDebut, String  dateFin, Client client, Abonnement abonnement) {
+    public Contrat(Calendar  dateDebut, Calendar  dateFin, Client client, Abonnement abonnement) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
         this.abonnement = abonnement;
     }
 
-    public Contrat(String  dateDebut, String  dateFin, Client client, Abonnement abonnement, List<Facture> factures) {
+    public Contrat(Calendar  dateDebut, Calendar  dateFin, Client client, Abonnement abonnement, List<Facture> factures) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
@@ -57,19 +55,19 @@ public class Contrat {
         this.id = id;
     }
 
-    public String  getDateDebut() {
+    public Calendar  getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(String  dateDebut) {
+    public void setDateDebut(Calendar  dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public String  getDateFin() {
+    public Calendar  getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(String  dateFin) {
+    public void setDateFin(Calendar  dateFin) {
         this.dateFin = dateFin;
     }
 

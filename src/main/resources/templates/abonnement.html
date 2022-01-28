@@ -106,8 +106,8 @@
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:inline="javascript">
     const data={
-        type:'',
-        frais:''
+        type:'ville',
+        frais:41
     }
     function showDiv(divId, element)
     {
@@ -117,15 +117,18 @@
             data.type="ville";
             data.frais=41;
         }
-        if(element.value ==0){
+        else if(element.value ==0){
             document.getElementById("hidden_div_ville").style.display = 'none';
             document.getElementById("hidden_div_transit").style.display = 'block';
             data.type="transit";
             data.frais=50;
         }
-        if(element.value =="none"){
+        else{
             document.getElementById("hidden_div_ville").style.display = 'none';
             document.getElementById("hidden_div_transit").style.display = 'none';
+            data.type="";
+            data.frais=""
+
         }
     }
 
@@ -143,7 +146,10 @@
                url: "/abonnement?jwt="+jwt,
                type: "POST",
                dataType: "json",
-               data: JSON.stringify(data),
+               data: JSON.stringify({
+                   type:'ville',
+                   frais:41
+               }),
                contentType: "application/json",
                success: function(response){
                    alert(JSON.stringify(response));

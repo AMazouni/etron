@@ -15,7 +15,6 @@ import fr.dosi.etron.service.ifc.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,19 +34,18 @@ public class AbonnementServiceImpl implements AbonnementService {
     @Override
     public Contrat sabonner(AbonnementDTO abonnementDTO,String jwt) throws ResourcesNotFoundFault {
         try {
-
             DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User u = insSer.findByEmail(email);
         Client c = u.getClient();
         abonnementDTO.setClientID(c.getId());
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            String datedebut=dateFormat.format(calendar.getTime());
-            calendar.add(Calendar.DATE, 12);
-            String dateFin=dateFormat.format(calendar.getTime());
+
+        Date dateDebut = Calendar.getInstance().getTime();
+        Calendar cal= Calendar.getInstance();
+        Calendar calFin = Calendar.getInstance();
+        calFin.add(Calendar.YEAR,1);
         Abonnement a = abonnementDAO.findFirstByType(abonnementDTO.getTypeAbonnement());
-        Contrat contrat = new Contrat(datedebut,dateFin,c,a);
+        Contrat contrat = new Contrat(cal,calFin,c,a);
 
         if( a==null)throw new ResourcesNotFoundFault(abonnementDTO,"Pas d'abonnement disponible de type"+abonnementDTO.getTypeAbonnement());
         if(c==null)throw new ResourcesNotFoundFault(abonnementDTO,"Pas de client avec l'emæil "+email);
@@ -79,10 +77,7 @@ public class AbonnementServiceImpl implements AbonnementService {
         try{
             List<Contrat> myContrat = getMyContrats(jwt);
             Contrat con=myContrat.stream().filter(c -> c.getId()==id).findFirst().get();
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            String datedebut=dateFormat.format(calendar.getTime());
-            con.setDateFin(datedebut);
+            con.setDateFin(Calendar.getInstance());
             return contratDAO.save(con);
 
         }catch(JWTDecodeException e ){
