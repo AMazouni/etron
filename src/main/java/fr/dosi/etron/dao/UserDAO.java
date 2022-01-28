@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-@RepositoryRestResource(path = "User",collectionResourceRel = "User")
+@RepositoryRestResource(path = "userRest",collectionResourceRel = "User")
 public interface UserDAO extends JpaRepository<User,Long> {
     User findByEmail(String email);
     List<User> findByClient(Client client);

@@ -2,6 +2,7 @@ package fr.dosi.etron.service.Impl;
 
 
 import fr.dosi.etron.dao.ClientDAO;
+import fr.dosi.etron.dao.RolesDAO;
 import fr.dosi.etron.dao.UserDAO;
 import fr.dosi.etron.dto.UserRegistrationDTO;
 import fr.dosi.etron.exceptions.DuplicateEntityFault;
@@ -28,6 +29,8 @@ public class InscriptionServiceImpl implements InscriptionService {
     UserDAO userDAO;
     @Autowired
     ClientDAO clientDAO;
+    @Autowired
+    RolesDAO roleDao;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -39,7 +42,7 @@ public class InscriptionServiceImpl implements InscriptionService {
         String lastname=registrationDto.getLastName();
         String email=registrationDto.getEmail();
         String password=bCryptPasswordEncoder.encode(registrationDto.getPassword());
-        List<Role> roles= Arrays.asList(new Role("Client"));
+        List<Role> roles= Arrays.asList(roleDao.findById(1l).get());
         Client client= new Client(lastname,firstname,"","","",new Date(),null);
         Client dBClient = clientDAO.findByNomAndPrenom(client.getNom(),client.getPrenom());
         User user=new User(firstname,lastname,email,password,roles,client);

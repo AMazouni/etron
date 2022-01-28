@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryRestResource(path = "Facture",collectionResourceRel = "Facture")
+@RepositoryRestResource(path = "factureRest",collectionResourceRel = "Facture")
 public interface FactureDAO extends JpaRepository<Facture,Long> {
 
 

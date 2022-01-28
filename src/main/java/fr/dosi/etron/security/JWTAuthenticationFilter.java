@@ -40,6 +40,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        } catch(AuthenticationException e){
+            try {
+                response.getWriter().print("Authentification echoué");
+                return null;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return null;
+            }
         }
     }
 
@@ -64,4 +72,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().print(jwt);
         System.out.println("authSuccess"+jwt);
     }
+
+
 }

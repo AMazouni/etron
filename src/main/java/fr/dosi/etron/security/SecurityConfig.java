@@ -30,7 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/registration**", "/js/**",
-                "/css/**", "/img/**","/login/**","/login", "/register/**","/api/ser-inscription/register","/api/ser-inscription/login").permitAll();
+                "/css/**", "/img/**","/login/**","/login", "/register/**","/api/ser-inscription/register/","/api/ser-inscription/login").permitAll()
+                .antMatchers("/api/ser-abonnement/**","/api/ser-abonnement").hasAuthority("client");
+        http.authorizeRequests().antMatchers("/api","/api/**").hasAuthority("admin");
+
         /*http.authorizeRequests().anyRequest().authenticated();
 
 
@@ -41,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 logoutSuccessUrl("/login?logout")
                 .permitAll();*/
 
-//        http.authorizeRequests().anyRequest().authenticated();
-        http.authorizeRequests().anyRequest().permitAll();
+        //http.authorizeRequests().anyRequest().hasRole("admin");
+              http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
         http.addFilterBefore(new JWTPreFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-@RepositoryRestResource(path = "Role",collectionResourceRel = "Role")
+@RepositoryRestResource(path = "roleRest",collectionResourceRel = "Role")
 public interface RolesDAO extends JpaRepository<Role,Long> {
 }

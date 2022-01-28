@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryRestResource(path = "Client",collectionResourceRel = "Client")
+@RepositoryRestResource(path = "clientRest",collectionResourceRel = "Client")
 public interface ClientDAO extends JpaRepository<Client,Long> {
 Client findByNomAndPrenom(String nom,String prenom);
 
