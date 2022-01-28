@@ -34,8 +34,8 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Contrat findByClient(Long id) {
-        return (Contrat) contratDAO.findByClientId(id);
+    public List<Contrat> findByClient(Long id) {
+        return contratDAO.findByClientId(id);
     }
 
 

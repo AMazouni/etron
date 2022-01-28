@@ -10,6 +10,6 @@ public interface ContractService {
     Contrat save(Contrat contrat);
     List<Contrat> getAll();
     Optional<Contrat> findById(Long id);
-    Contrat findByClient(Long id);
+    List<Contrat> findByClient(Long id);
 
 }

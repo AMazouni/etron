@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/contrat")
@@ -27,7 +28,7 @@ public class ContratController {
     @Autowired
     private UserDAO userDAO;
     @GetMapping
-    public Contrat getContract(String jwt){
+    public List<Contrat> getContract(String jwt){
         DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User user=userDAO.findByEmail(email);
