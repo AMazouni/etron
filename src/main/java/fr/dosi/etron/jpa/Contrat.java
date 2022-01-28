@@ -14,7 +14,7 @@ public class Contrat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-
+//WORK
     @Temporal(TemporalType.DATE)
     Calendar  dateDebut;
     @Temporal(TemporalType.DATE)
