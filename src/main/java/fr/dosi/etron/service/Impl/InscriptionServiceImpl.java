@@ -58,7 +58,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Override
     public User findByEmail(String email) throws ResourcesNotFoundFault {
         User u= userDAO.findByEmail(email);
-        if(u != null) throw new ResourcesNotFoundFault(email,"Not Found");
+        if(u == null) throw new ResourcesNotFoundFault(email,"Not Found");
         return userDAO.findByEmail(email);
     }
     @Override

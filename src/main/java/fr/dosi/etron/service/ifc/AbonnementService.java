@@ -16,7 +16,9 @@ public interface AbonnementService {
     Contrat sabonner(AbonnementDTO AbonnementDTO,String jwt) throws EmptyRessourceFault, ResourcesNotFoundFault;
 
 
+    List<Contrat> getMyContrats(String jwt) throws ResourcesNotFoundFault;
 
+    Contrat resilierContrat(Long id, String jwt) throws ResourcesNotFoundFault;
 
     @Transactional
     Contrat save(Contrat entity) throws DuplicateEntityFault, EmptyRessourceFault;

@@ -7,7 +7,6 @@ import fr.dosi.etron.dao.AbonnementDAO;
 import fr.dosi.etron.dao.ContratDAO;
 import fr.dosi.etron.dao.VoitureDAO;
 import fr.dosi.etron.dto.AbonnementDTO;
-import fr.dosi.etron.exceptions.DuplicateEntityFault;
 import fr.dosi.etron.exceptions.EmptyRessourceFault;
 import fr.dosi.etron.exceptions.ResourcesNotFoundFault;
 import fr.dosi.etron.jpa.*;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class AbonnementServiceImpl implements AbonnementService {
@@ -32,8 +32,9 @@ public class AbonnementServiceImpl implements AbonnementService {
     VoitureDAO voitureDao;
 
     @Override
-    public Contrat sabonner(AbonnementDTO abonnementDTO,String jwt) throws EmptyRessourceFault, ResourcesNotFoundFault {
+    public Contrat sabonner(AbonnementDTO abonnementDTO,String jwt) throws ResourcesNotFoundFault {
         try {
+
             DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User u = insSer.findByEmail(email);
@@ -58,10 +59,38 @@ public class AbonnementServiceImpl implements AbonnementService {
 
     }
 
+    @Override
+    public List<Contrat> getMyContrats(String jwt) throws ResourcesNotFoundFault {
+        try{
+            DecodedJWT jwtt = JWT.decode(jwt);
+        String email=jwtt.getSubject();
+        User u = insSer.findByEmail(email);
+        Client c = u.getClient();
+        return this.findByClientId(c.getId());
+        }catch(JWTDecodeException e ){
+        throw new ResourcesNotFoundFault(jwt,"Some kind of exception");
+    }
+    }
+
+
+    @Override
+    public Contrat resilierContrat(Long id,String jwt) throws ResourcesNotFoundFault {
+        try{
+            List<Contrat> myContrat = getMyContrats(jwt);
+            Contrat con=myContrat.stream().filter(c -> c.getId()==id).findFirst().get();
+            con.setDateFin(Calendar.getInstance());
+            return contratDAO.save(con);
+
+        }catch(JWTDecodeException e ){
+            throw new ResourcesNotFoundFault(jwt,"Some kind of exception");
+        }catch(NoSuchElementException e){
+            throw new ResourcesNotFoundFault(id,"no Contrat  corresponding to this contrat id");
+        }
+    }
 
 
 
-
+////
     @Override
     public Contrat save(Contrat entity) throws  EmptyRessourceFault {
 
@@ -78,13 +107,15 @@ public class AbonnementServiceImpl implements AbonnementService {
 
     @Override
     public User findById(Long aLong) throws ResourcesNotFoundFault {
-        return null;
+        User cont=insSer.findById(aLong);
+        if(cont==null ) throw new ResourcesNotFoundFault(aLong,"no User corresponding to this id");
+        return cont;
     }
 
     @Override
     public List<Contrat> findByClientId(Long aLong) throws ResourcesNotFoundFault {
         List<Contrat> cont=contratDAO.findByClientId(aLong);
-        if(cont==null || cont.size()==0) throw new ResourcesNotFoundFault(aLong,"no Client corresponding to this id");
+        if(cont==null || cont.size()==0) throw new ResourcesNotFoundFault(aLong,"no Contrat corresponding to this Client id");
         return cont;
     }
 
