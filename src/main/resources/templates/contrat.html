@@ -12,9 +12,6 @@
     .navbar {
         background-color: green;
     }
-    #hidden_div_ville,#hidden_div_transit{
-        display: none;
-    }
 </style>
 <body>
 <h1>Contrat</h1>
@@ -49,16 +46,16 @@
 
             <h1>Subcription</h1>
 
-            <tr th:each="contrat : ${contrat}">
-                <td th:text="${menu.date_debut}"></td>
-                <td th:text="${menu.date_fin}"></td>
-                <td th:text="${menu.date_debut}"></td>
-                <td th:each="abn : ${menu.abonnement}"> <!-- I have only modified here -->
+            <tr th:each="con : ${contrat}">
+                <td th:text="${con.date_debut}"></td>
+                <td th:text="${con.date_fin}"></td>
+                <td th:text="${con.date_debut}"></td>
+                <td th:each="abn : ${con.abonnement}"> <!-- I have only modified here -->
                     <ul>
                         <li th:text = ${abn.type}></li>
                     </ul>
                 </td>
-                <td th:each="client : ${menu.client}"> <!-- I have only modified here -->
+                <td th:each="client : ${abn.client}"> <!-- I have only modified here -->
                     <ul>
                         <li th:text = ${client.nom}></li>
                         <li th:text = ${client.prenom}></li>

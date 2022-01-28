@@ -67,6 +67,6 @@ public class AbonnementController {
         Contrat contrat=new Contrat(date,date,client,abonnement);
         abonnementService.save(abonnement);
         contractService.save(contrat);
-        return "redirect:/contrat?jwt=" +jwt;
+        return "redirect:/contrat?jwt="+jwt;
     }
 }

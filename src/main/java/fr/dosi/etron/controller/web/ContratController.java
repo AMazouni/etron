@@ -10,6 +10,7 @@ import fr.dosi.etron.jpa.Contrat;
 import fr.dosi.etron.jpa.User;
 import fr.dosi.etron.security.SecurityParams;
 import fr.dosi.etron.service.ifc.ContractService;
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,28 +22,31 @@ import java.util.List;
 public class ContratController {
     @Autowired
     private ContractService contractService;
-    @Autowired
-    private ContratDAO contratDAO;
+
     @Autowired
     private UserDAO userDAO;
 
-    @ModelAttribute("contrat")
+    /*@ModelAttribute("contrat")
     public List<Contrat> Contrat(@RequestParam String jwt) {
         System.out.println("TTTTT+++>"+jwt);
         return this.getContract(jwt);
-    }
+    }*/
 
-    @GetMapping
-    public String showContrat(){
+    @GetMapping()
+    public String showContrat(Model model, @RequestParam String jwt){
+        System.out.println("TTTTT+++>"+jwt);
+        List<Contrat> contrat= this.getContract(jwt);
+        System.out.println("contrat===>"+contrat);
+        model.addAttribute("contrat", contrat);
         return "contrat";
     }
-
     public List<Contrat> getContract(String jwt){
         DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User user=userDAO.findByEmail(email);
         System.out.println("EMAIL=" + email);
-        return (List<Contrat>) contractService.findByClient(user.getId());
+        System.out.println("EMAIL contrat=" + contractService.findByClient(user.getId()));
+        return contractService.findByClient(user.getId());
     }
     @PostMapping
     public Contrat saveContract(Contrat contrat){
