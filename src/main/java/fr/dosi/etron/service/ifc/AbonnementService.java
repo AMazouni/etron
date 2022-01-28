@@ -1,7 +1,6 @@
 package fr.dosi.etron.service.ifc;
 
 import fr.dosi.etron.dto.AbonnementDTO;
-import fr.dosi.etron.dto.UserRegistrationDTO;
 import fr.dosi.etron.exceptions.DuplicateEntityFault;
 import fr.dosi.etron.exceptions.EmptyRessourceFault;
 import fr.dosi.etron.exceptions.ResourcesNotFoundFault;
@@ -14,12 +13,12 @@ import java.util.List;
 
 public interface AbonnementService {
     @Transactional
-    Contrat sabonner(AbonnementDTO AbonnementDTO) throws EmptyRessourceFault, DuplicateEntityFault;
+    Contrat sabonner(AbonnementDTO AbonnementDTO,String jwt) throws EmptyRessourceFault, ResourcesNotFoundFault;
 
 
-    User findByEmail(String email) throws ResourcesNotFoundFault;
+    List<Contrat> getMyContrats(String jwt) throws ResourcesNotFoundFault;
 
-    List<User> saveAll(Iterable<User> entities);
+    Contrat resilierContrat(Long id, String jwt) throws ResourcesNotFoundFault;
 
     @Transactional
     Contrat save(Contrat entity) throws DuplicateEntityFault, EmptyRessourceFault;
@@ -27,6 +26,9 @@ public interface AbonnementService {
 
     User findById(Long aLong) throws ResourcesNotFoundFault;
 
+    List<Contrat> findByClientId(Long aLong) throws ResourcesNotFoundFault;
+
     long count();
+    public List<Contrat> getAllContrats();
     public List<Abonnement> getAll();
 }

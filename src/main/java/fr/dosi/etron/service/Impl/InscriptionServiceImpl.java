@@ -58,7 +58,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Override
     public User findByEmail(String email) throws ResourcesNotFoundFault {
         User u= userDAO.findByEmail(email);
-        if(u != null) throw new ResourcesNotFoundFault(email);
+        if(u == null) throw new ResourcesNotFoundFault(email,"Not Found");
         return userDAO.findByEmail(email);
     }
     @Override
@@ -70,15 +70,15 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Override
     public User save(User entity) throws DuplicateEntityFault, EmptyRessourceFault {
         if(userDAO.findByEmail(entity.getEmail())!=null)  throw new DuplicateEntityFault(entity,"User Email Duplicate");
-        if(entity.getEmail()==null || entity.getPassword()==null || entity.getRoles()==null || entity.getFirstName()==null || entity.getLastName()==null ) throw new EmptyRessourceFault(entity);
+        if(entity.getEmail()==null || entity.getPassword()==null || entity.getRoles()==null || entity.getFirstName()==null || entity.getLastName()==null ) throw new EmptyRessourceFault(entity,"an input attribute is null");
 
-        if(entity.getEmail().isEmpty() || entity.getPassword().isEmpty() || entity.getFirstName().isEmpty() || entity.getLastName().isEmpty() )  throw new EmptyRessourceFault(entity);
+        if(entity.getEmail().isEmpty() || entity.getPassword().isEmpty() || entity.getFirstName().isEmpty() || entity.getLastName().isEmpty() )  throw new EmptyRessourceFault(entity,"an input attribute is empty");
         return userDAO.save(entity);
     }
     @Override
     public User findById(Long aLong) throws ResourcesNotFoundFault {
         Optional<User> u = userDAO.findById(aLong);
-        if(!u.isPresent()) throw new ResourcesNotFoundFault(aLong);
+        if(!u.isPresent()) throw new ResourcesNotFoundFault(aLong, "Not Found");
         return u.get();
     }
     @Override
