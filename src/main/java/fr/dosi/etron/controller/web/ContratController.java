@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value="/contrat",params="jwt")
@@ -25,22 +25,8 @@ public class ContratController {
 
     @Autowired
     private UserDAO userDAO;
-
-    /*@ModelAttribute("contrat")
-    public List<Contrat> Contrat(@RequestParam String jwt) {
-        System.out.println("TTTTT+++>"+jwt);
-        return this.getContract(jwt);
-    }*/
-
-    @GetMapping()
-    public String showContrat(Model model, @RequestParam String jwt){
-        System.out.println("TTTTT+++>"+jwt);
-        List<Contrat> contrat= this.getContract(jwt);
-        System.out.println("contrat===>"+contrat);
-        model.addAttribute("contrat", contrat);
-        return "contrat";
-    }
-    public List<Contrat> getContract(String jwt){
+    @GetMapping
+    public Contrat getContract(String jwt){
         DecodedJWT jwtt = JWT.decode(jwt);
         String email=jwtt.getSubject();
         User user=userDAO.findByEmail(email);
